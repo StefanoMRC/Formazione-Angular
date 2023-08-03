@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { User } from "./model/user";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-root",
@@ -30,12 +31,17 @@ export class AppComponent {
   yourJson = { id: 1, name: "Stefano" };
 
   users2: User[];
-  constructor() {
+  constructor(http: HttpClient) {
     this.users2 = [
       { id: 1, name: "Stefano" },
       { id: 2, name: "Andrea" },
       { id: 3, name: "Valerio" },
     ];
     this.users2.push({ id: 4, name: "Cingols" });
+    http
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .subscribe((result) => {
+        console.log(result);
+      });
   }
 }
