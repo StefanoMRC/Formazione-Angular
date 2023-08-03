@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { User } from "./model/user";
 
 @Component({
   selector: "app-root",
@@ -35,10 +36,6 @@ export class AppComponent {
       { id: 2, name: "Andrea" },
       { id: 3, name: "Valerio" },
     ];
-    this.users2.push({id:4, name:'Cingols'})
-  }
-  interface User{
-    id:number;
-    name:string;
+    this.users2.push({ id: 4, name: "Cingols" });
   }
 }
