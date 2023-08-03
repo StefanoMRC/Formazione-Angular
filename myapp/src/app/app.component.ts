@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
+// RICHIAMO INTERFACCIA USER
 import { User } from "./model/user";
+// RICHIAMO INTERFACCIA POST
 import { Post } from "./model/post";
 import { HttpClient } from "@angular/common/http";
 
@@ -19,9 +21,9 @@ import { HttpClient } from "@angular/common/http";
     <div>{{ bitcoins | number : "2.2-4" }}</div>
     <!-- NUMBER OBJ -->
     <pre>{{ yourJson | json }}</pre>
-
+    <!-- CICLO ARRAY DI OGGETTI USERS -->
     <li *ngFor="let user of users2">{{ user.name }}</li>
-
+    <!-- STAMPO RESULT DELLA CHIAMATA -->
     <pre>{{ posts | json }}</pre>
   `,
 })
@@ -40,6 +42,7 @@ export class AppComponent {
       { id: 2, name: "Andrea" },
       { id: 3, name: "Valerio" },
     ];
+    // CHIAMATA GET
     this.users2.push({ id: 4, name: "Cingols" });
     http
       .get<Post[]>("https://jsonplaceholder.typicode.com/posts")
