@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { User } from "./model/user";
+import { Post } from "./model/post";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
@@ -20,6 +21,8 @@ import { HttpClient } from "@angular/common/http";
     <pre>{{ yourJson | json }}</pre>
 
     <li *ngFor="let user of users2">{{ user.name }}</li>
+
+    <pre>{{ posts | json }}</pre>
   `,
 })
 export class AppComponent {
@@ -29,7 +32,7 @@ export class AppComponent {
   money = 1200;
   bitcoins = 0.12345242;
   yourJson = { id: 1, name: "Stefano" };
-
+  posts: Post[];
   users2: User[];
   constructor(http: HttpClient) {
     this.users2 = [
@@ -39,9 +42,9 @@ export class AppComponent {
     ];
     this.users2.push({ id: 4, name: "Cingols" });
     http
-      .get("https://jsonplaceholder.typicode.com/posts")
+      .get<Post[]>("https://jsonplaceholder.typicode.com/posts")
       .subscribe((result) => {
-        console.log(result);
+        this.posts = result;
       });
   }
 }
