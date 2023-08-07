@@ -15,14 +15,30 @@ import { HttpClient } from "@angular/common/http";
 
     <!-- DATE PIPE -->
     <div>{{ today | date : "dd/MMM/yy" }}</div>
+
     <!-- CURRENCY PIPE -->
     <div>{{ money | currency : "€" }}</div>
+
     <!-- NUMBER PIPE -->
     <div>{{ bitcoins | number : "2.2-4" }}</div>
+
     <!-- NUMBER OBJ -->
     <pre>{{ yourJson | json }}</pre>
+
     <!-- CICLO ARRAY DI OGGETTI USERS -->
-    <li *ngFor="let user of users2">{{ user.name }}</li>
+    <div
+      *ngFor="
+        let user of users2;
+        let i = index;
+        let pari = odd;
+        let last = last
+      "
+    >
+      {{ i }}. {{ user.name }}
+      <hr *ngIf="pari" />
+      <div *ngIf="last">ULTIMO ELEMENTO</div>
+    </div>
+
     <!-- STAMPO RESULT DELLA CHIAMATA -->
     <pre>{{ posts | json }}</pre>
   `,
