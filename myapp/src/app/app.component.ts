@@ -36,12 +36,17 @@ import { HttpClient } from "@angular/common/http";
     >
       {{ i }}. {{ user.name }}
       <hr *ngIf="pari" />
-      <div *ngIf="last">ULTIMO ELEMENTO</div>
+      <div *ngIf="last" class="lastElement">ULTIMO ELEMENTO</div>
     </div>
+    <!-- NG CLASS -->
+    <li *ngFor="let user of users3" [ngClass]="getCls(user)">
+      {{ user.name }}
+    </li>
 
     <!-- STAMPO RESULT DELLA CHIAMATA -->
     <pre>{{ posts | json }}</pre>
   `,
+  styleUrls: ["./app.components.css"],
 })
 export class AppComponent {
   visible = false;
@@ -52,12 +57,25 @@ export class AppComponent {
   yourJson = { id: 1, name: "Stefano" };
   posts: Post[];
   users2: User[];
+  users3 = [
+    { id: 1, name: "Fabio", gender: "M" },
+    { id: 2, name: "Lisa", gender: "F" },
+    { id: 3, name: "Lorenzo", gender: "M" },
+    { id: 4, name: "Silvia", gender: "F" },
+  ];
+  getCls(user) {
+    return {
+      female: user.gender === "F",
+      male: user.gender === "M",
+    };
+  }
   constructor(http: HttpClient) {
     this.users2 = [
       { id: 1, name: "Stefano" },
       { id: 2, name: "Andrea" },
       { id: 3, name: "Valerio" },
     ];
+
     // CHIAMATA GET
     this.users2.push({ id: 4, name: "Cingols" });
     http
