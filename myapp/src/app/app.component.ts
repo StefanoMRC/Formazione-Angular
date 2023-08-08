@@ -4,28 +4,31 @@ import { User } from "./model/user";
 // RICHIAMO INTERFACCIA POST
 import { Post } from "./model/post";
 import { HttpClient } from "@angular/common/http";
+import { FormAdded } from "./model/formAdded";
 
 @Component({
   selector: "app-root",
   template: `
+    <h2>NG IF</h2>
     <button (click)="visible = !visible">visibilità</button>
     <app-hello *ngIf="visible"></app-hello>
 
     <li [hidden]="!visible" *ngFor="let user of users">{{ user }}</li>
 
-    <!-- DATE PIPE -->
+    <h2>DATE PIPE</h2>
     <div>{{ today | date : "dd/MMM/yy" }}</div>
 
-    <!-- CURRENCY PIPE -->
+    <h2>CURRENCY PIPE</h2>
     <div>{{ money | currency : "€" }}</div>
 
-    <!-- NUMBER PIPE -->
+    <h2>NUMBER PIPE</h2>
     <div>{{ bitcoins | number : "2.2-4" }}</div>
 
-    <!-- NUMBER OBJ -->
+    <h2>NUMBER OBJ</h2>
+    NUMBER OBJ
     <pre>{{ yourJson | json }}</pre>
 
-    <!-- CICLO ARRAY DI OGGETTI USERS -->
+    <h2>CICLO ARRAY DI OGGETTI USERS</h2>
     <div
       *ngFor="
         let user of users2;
@@ -38,17 +41,29 @@ import { HttpClient } from "@angular/common/http";
       <hr *ngIf="pari" />
       <div *ngIf="last" class="lastElement">ULTIMO ELEMENTO</div>
     </div>
-    <!-- NG CLASS -->
+    <h2>NG CLASS</h2>
     <li *ngFor="let user of users3" [ngClass]="getCls(user)">
       {{ user.name }}
     </li>
+    <h2>FORM</h2>
+    <form #f="ngForm" (submit)="addForm(f)">
+      <input type="text" [ngModel]="formAdded?.label" name="label" />
+      <input type="number" [ngModel]="formAdded?.age" name="age" />
+      <button type="submit">ADD</button>
+    </form>
+    {{ formAdded }}
+    <li *ngFor="let user of formAdded">{{ user.label }} - {{ user.age }}</li>
 
-    <!-- STAMPO RESULT DELLA CHIAMATA -->
+    <h2>STAMPO RESULT DELLA CHIAMATA</h2>
     <pre>{{ posts | json }}</pre>
   `,
   styleUrls: ["./app.components.css"],
 })
 export class AppComponent {
+  label: string;
+  age: number;
+  formAdded: FormAdded[] = [];
+
   visible = false;
   users = ["Stefano", "Fabio", "Andrea"];
   today = Date.now();
@@ -63,12 +78,17 @@ export class AppComponent {
     { id: 3, name: "Lorenzo", gender: "M" },
     { id: 4, name: "Silvia", gender: "F" },
   ];
+
   getCls(user) {
     return {
       female: user.gender === "F",
       male: user.gender === "M",
     };
   }
+  addForm(form: NgForm) {
+    this.formAdded.push(form.value);
+  }
+
   constructor(http: HttpClient) {
     this.users2 = [
       { id: 1, name: "Stefano" },
