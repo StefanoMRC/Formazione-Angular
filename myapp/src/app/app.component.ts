@@ -87,6 +87,7 @@ export class AppComponent {
   }
   addForm(form: NgForm) {
     this.formAdded.push(form.value);
+    form.reset();
   }
 
   constructor(http: HttpClient) {
